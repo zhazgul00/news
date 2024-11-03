@@ -141,3 +141,4 @@ LOGOUT_REDIRECT_URL = "home"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 TIME_ZONE = "America/New_York"
+
