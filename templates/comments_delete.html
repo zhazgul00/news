@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Confirm Delete Comment</h2>
+  <p>Are you sure you want to delete this comment?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'article_detail' object.article.pk %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}
