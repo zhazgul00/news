@@ -11,15 +11,42 @@
 
 <h4>Comments</h4>
 
-
 {% for comment in object.comment_set.all %}
-    <p>
-        <span class="font-weight-bold">{{ comment.author }} &middot; </span> {{ comment }}
-        {% if comment.author == request.user %}
-            <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
-            <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+    <div>
+        <p>
+            <span class="font-weight-bold">{{ comment.author }} &middot; </span> {{ comment }}
+            {% if comment.author == request.user %}
+                <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+                <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+            {% endif %}
+        </p>
+        
+        
+        {% if user.is_authenticated %}
+            <h5>Reply to {{ comment.author }}:</h5>
+            <form method="post" action="{% url 'article_detail' object.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="parent" value="{{ comment.pk }}">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% else %}
+            <p>You must be logged in to leave a reply.</p>
         {% endif %}
-    </p>
+        
+        
+        {% for reply in comment.replies.all %}
+            <div style="margin-left: 20px;">
+                <p>
+                    <span class="font-weight-bold">{{ reply.author }} &middot; </span> {{ reply }}
+                    {% if reply.author == request.user %}
+                        <a href="{% url 'comment_edit' reply.pk %}">Edit</a> |
+                        <a href="{% url 'comment_delete' reply.pk %}">Delete</a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
 {% endfor %}
 
 <p>

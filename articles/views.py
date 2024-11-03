@@ -14,6 +14,7 @@ class CommentGet(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
+        context["comments"] = self.object.comment_set.all()
         return context
 
 
@@ -26,12 +27,17 @@ class CommentPost(SingleObjectMixin, FormView):
         return super().post(request, *args, **kwargs)
     
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.article = self.object
-        form.instance.author = self.request.user
-        comment.save()
-        return super().form_valid(form)
+            comment = form.save(commit=False)
+            comment.article = self.object
+            form.instance.author = self.request.user
+            
+            parent_id = self.request.POST.get('parent')
+            if parent_id:
+                comment.parent_id = parent_id  
+            comment.save()
+            return super().form_valid(form)
     
+
     def get_success_url(self):
         article = self.get_object()
         return reverse("article_detail", kwargs={"pk": article.pk})
