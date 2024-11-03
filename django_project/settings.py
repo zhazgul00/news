@@ -142,3 +142,11 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 TIME_ZONE = "America/New_York"
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+DEFAULT_FROM_EMAIL = "your_custom_email_account"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = "sendgrid_password"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
