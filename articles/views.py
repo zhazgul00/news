@@ -98,6 +98,12 @@ class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "article_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['comments'] = {article.pk: article.comment_set.all() for article in context['object_list']}
+        return context
+
 
 class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): 
     model = Article

@@ -13,8 +13,9 @@
 
 {% for comment in object.comment_set.all %}
     <div>
-        <p>
-            <span class="font-weight-bold">{{ comment.author }} &middot; </span> {{ comment }}
+        
+            <h4><span class="font-weight-bold">{{ comment.author }} &middot; </span> {{ comment }}</h4>
+        <p>   
             {% if comment.author == request.user %}
                 <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
                 <a href="{% url 'comment_delete' comment.pk %}">Delete</a>

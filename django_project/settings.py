@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m&(fmphe+3kpjcqeq@b5*0%b^p0t((^w4r(lypt5fsmh3zht6&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"] 
 
 
 # Application definition
@@ -80,12 +81,6 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -144,9 +139,21 @@ TIME_ZONE = "America/New_York"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-DEFAULT_FROM_EMAIL = "your_custom_email_account"
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "sendgrid_password"
+DEFAULT_FROM_EMAIL = "ablakeevazhazgul@gmail.com"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "ablakeevazhazgul@gmail.com"
+EMAIL_HOST_PASSWORD = "esjyxcpkfjarhgsd"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+env = Env() 
+env.read_env()
+
+DEBUG = env.bool("DEBUG", default=False)
+
+SECRET_KEY = env.str("SECRET_KEY")
+
+DATABASES = {
+"default": env.dj_db_url("DATABASE_URL")
+}
