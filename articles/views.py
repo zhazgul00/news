@@ -6,6 +6,9 @@ from django.urls import reverse_lazy, reverse
 from .models import Article, Comment
 from .forms import CommentForm
 from django.views import View 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView
+from apis.serializers import ArticleSerializer
 
 class CommentGet(DetailView):
     model = Article
@@ -123,3 +126,9 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self): 
         obj = self.get_object()
         return obj.author == self.request.user
+
+
+class ProtectedArticleListAPIView(ListAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    permission_classes = [IsAuthenticated]

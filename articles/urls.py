@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     ArticleListView, ArticleDetailView, ArticleUpdateView, 
     ArticleDeleteView, ArticleCreateView, CommentUpdateView, 
-    CommentDeleteView
+    CommentDeleteView, ProtectedArticleListAPIView
 )
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path("", ArticleListView.as_view(), name="article_list"),
     path("comment/<int:pk>/edit/", CommentUpdateView.as_view(), name="comment_edit"),
     path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
+    path("protected-articles/", ProtectedArticleListAPIView.as_view(), name="protected-articles"),
 ]

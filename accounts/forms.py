@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = (
         "username",
         "email",
-        "age",
+        "age"
         ) 
 
 class CustomUserChangeForm(UserChangeForm):
@@ -17,11 +17,6 @@ class CustomUserChangeForm(UserChangeForm):
         fields = (
             "username",
             "email",
-            "age",
+            "age"
         )
-        exclude = ('password',) 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        if 'password' in self.fields:
-            del self.fields['password']
+
