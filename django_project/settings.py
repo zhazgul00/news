@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "whitenoise.runserver_nostatic", 
     # 3rd Party
+    'corsheaders',
     "rest_framework", 
     "crispy_forms",
     "crispy_bootstrap5", 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware", 
@@ -151,3 +153,19 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",  
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:3000",  
+]
+
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'x-csrftoken',
+    'accept',
+    'origin',
+    'user-agent',
+]
