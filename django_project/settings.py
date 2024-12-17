@@ -35,11 +35,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "whitenoise.runserver_nostatic", 
+    "django.contrib.sites",
     # 3rd Party
     'corsheaders',
     "rest_framework", 
     "crispy_forms",
     "crispy_bootstrap5", 
+    "rest_framework.authtoken", 
+    "allauth", 
+    "allauth.account", 
+    "allauth.socialaccount", 
+    "dj_rest_auth", 
+    "dj_rest_auth.registration", 
     # Local
     "apis.apps.ApisConfig", 
     "accounts.apps.AccountsConfig",
@@ -72,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.request", 
             ],
         },
     },
@@ -147,6 +155,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated", 
 ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [ 
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+],
+
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5), 
@@ -169,3 +182,5 @@ CORS_ALLOW_HEADERS = [
     'origin',
     'user-agent',
 ]
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
+SITE_ID = 1 
